@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Graduation Photo Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, select, button {
+            margin-bottom: 10px;
+        }
+        button {
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        #generatedImage {
+            max-width: 100%;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Graduation Photo Generator</h1>
+    <form id="photoForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <label for="project">Project:</label>
+        <select id="project" name="project" required>
+            <option value="MBA">MBA</option>
+            <option value="DBA">DBA</option>
+            <option value="MCS">MCS</option>
+        </select>
+
+        <label for="photos">Upload Photos (1-4):</label>
+        <input type="file" id="photos" name="photos" accept="image/*" multiple required>
+
+        <button type="submit">Generate Photo</button>
+    </form>
+
+    <div id="result">
+        <img id="generatedImage" alt="Generated Graduation Photo">
+    </div>
+
+    <script>
+        const form = document.getElementById('photoForm');
+        const resultDiv = document.getElementById('result');
+        const generatedImage = document.getElementById('generatedImage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            const gender = formData.get('gender');
+            const project = formData.get('project');
+            const photos = formData.getAll('photos');
+
+            if (photos.length === 0 || photos.length > 4) {
+                alert('Please upload 1-4 photos');
+                return;
+            }
+
+            // For demonstration, we'll just show a message instead of actually calling the API
+            resultDiv.innerHTML = '<p>Processing... (This would normally call the API and generate an image)</p>';
+
+            // In a real implementation, you would upload the photos to Cloudflare R2 here
+            // and get the URLs for the uploaded photos
+
+            // Then you would call the HuggingFace API with the photo URLs and other data
+            const genderPrompt = gender === 'male' ? 'man' : 'woman';
+            const positivePrompt = `A photo of a \${genderPrompt} img, a full body photo of person, professional upscale \${project} graduation portrait in traditional style, wearing premium black doctoral regalia with dark blue velvet stripes and doctoral hood, elegant formal studio posing with arms naturally at sides, majestic classical architecture background slightly blurred, premium studio lighting with soft rim light, photorealistic 8k quality, professional photography, crisp sharp details, cinematic color grading, prestigious academic atmosphere, elegant pose, professional fashion magazine quality.`;
+            const negativePrompt = "deformed hands, visible fingers, holding objects, certificates, diplomas, text, logos, watermarks, letters, university names, deformed face, unrealistic face, blurry, low quality, artificial looking, cartoon, anime, 3d render, bad anatomy, deformed body, bad proportions, ugly lighting, grainy, noisy, out of focus, cropped limbs, partial body, cropped body, distorted limbs, bad composition, oversaturated";
+
+            // Simulating API call delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // For demonstration, we'll just show a placeholder image
+            generatedImage.src = 'https://via.placeholder.com/500x500.png?text=Generated+Graduation+Photo';
+            generatedImage.style.display = 'block';
+            resultDiv.innerHTML = '<p>Photo generated successfully! (This is a placeholder image)</p>';
+        });
+    </script>
+</body>
+</html>
