@@ -1,0 +1,48 @@
+# .gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+ENV/
+.DS_Store
+.vercel
+*.log
+
+# README.md
+# AI Graduation Photo Generator
+
+An AI-powered application that generates professional graduation photos using PhotoMaker API and Cloudflare R2 storage.
+
+## Features
+- Upload 1-4 personal photos
+- Choose degree type (MBA, DBA, MCS)
+- Select gender preference
+- Generate professional graduation photos
+- Automatic cloud storage and delivery
+
+## Tech Stack
+- Python/Flask
+- Vercel Serverless Functions
+- Cloudflare R2 Storage
+- HuggingFace PhotoMaker API
+
+## Setup
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Configure environment variables
+4. Deploy to Vercel
+
+## Environment Variables
+Create a `.env` file with:
+```
+HUGGINGFACE_API_TOKEN=your_token
+R2_ACCESS_KEY_ID=your_key
+R2_SECRET_ACCESS_KEY=your_secret
+```
+
+## Development
+Run locally: `vercel dev`
+Deploy: `vercel deploy`
